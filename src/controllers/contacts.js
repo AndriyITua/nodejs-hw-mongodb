@@ -28,7 +28,7 @@ export const getContactByIdController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
+    message: `Successfully found contact with id=${contactId}`,
     data,
   });
 };
@@ -71,7 +71,7 @@ export const patchContactController = async (req, res) => {
   }
 
   res.json({
-    ststus: 200,
+    status: 200,
     message: 'Successfully patched a contact!',
     data: result.data,
   });
