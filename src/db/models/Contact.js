@@ -1,13 +1,20 @@
 import { Schema, model } from 'mongoose';
 
+import { contactTypes, phoneNumberRegexp } from '../../constants/contacts.js';
+
+import { handleSaveError, setUpdateOptions } from './hooks.js';
+
 const contactSchema = new Schema(
   {
     name: {
       type: String,
+      min: 3,
+      max: 20,
       required: true,
     },
     phoneNumber: {
       type: String,
+      match: phoneNumberRegexp,
       required: true,
     },
     email: {
@@ -20,13 +27,20 @@ const contactSchema = new Schema(
     },
     contactType: {
       type: String,
-      enum: ['work', 'home', 'personal'],
+      enum: contactTypes,
       required: true,
       default: 'personal',
     },
   },
   { versionKey: false, timestamps: true },
 );
+
+contactSchema.post('save', handleSaveError);
+
+// Перед тим як зробити операцію "знайди і онови" виконай функцію setUpdateOptions
+contactSchema.pre('findOneAndUpdate', setUpdateOptions);
+
+contactSchema.post('findOneAndUpdate', handleSaveError);
 
 const Contact = model('contacts-1', contactSchema);
 
