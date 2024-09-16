@@ -11,7 +11,7 @@ import contactsRouter from './routers/contacts.js';
 export const setupServer = () => {
   const app = express();
 
-  // app.use(logger);
+  app.use(logger);
   // Мідлавара, що дозволяє робити запит з різних ip-адрес
   app.use(cors());
   // Мідлвара, що перетворює формат буфер на об'єкт в форматі json
