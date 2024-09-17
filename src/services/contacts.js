@@ -32,9 +32,9 @@ export const getContacts = async ({
   const paginationData = calculatePaginationData({ count, perPage, page });
 
   return {
+    data: contacts,
     page,
     perPage,
-    contacts,
     totalItems: count,
     ...paginationData,
   };
