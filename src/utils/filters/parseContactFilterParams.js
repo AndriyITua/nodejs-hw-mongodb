@@ -1,13 +1,13 @@
 import parseBoolean from './parseBoolean.js';
 import parseString from './parseString.js';
 
-const parseContactFilterParams = ({ isFavourite, contactType }) => {
+const parseContactFilterParams = ({ isFavourite, type }) => {
   const parsedisFavourite = parseBoolean(isFavourite);
-  const parsedcontactType = parseString(contactType);
+  const parsedcontactType = parseString(type);
 
   return {
     isFavourite: parsedisFavourite,
-    contactType: parsedcontactType,
+    type: parsedcontactType,
   };
 };
 
