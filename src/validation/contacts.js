@@ -5,9 +5,7 @@ import { contactTypes, phoneNumberRegexp } from '../constants/contacts.js';
 export const contactAddSchema = Joi.object({
   name: Joi.string().min(3).max(20).required(),
   phoneNumber: Joi.string().pattern(phoneNumberRegexp).required(),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .allow(null),
+  email: Joi.string().email().allow(null),
   isFavourite: Joi.boolean().default(false),
   contactType: Joi.string()
     .valid(...contactTypes)
@@ -18,9 +16,7 @@ export const contactAddSchema = Joi.object({
 export const contactPatchSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.string().pattern(phoneNumberRegexp),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .allow(null),
+  email: Joi.string().email().allow(null),
   isFavourite: Joi.boolean().default(false),
   contactType: Joi.string()
     .valid(...contactTypes)
