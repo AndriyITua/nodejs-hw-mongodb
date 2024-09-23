@@ -31,6 +31,13 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal',
     },
+
+    // Користувач, що добавив контакт
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true },
 );

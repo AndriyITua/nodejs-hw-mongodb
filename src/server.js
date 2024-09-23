@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 import env from './utils/env.js';
 
 import notFoundHandler from './middlewares/notFoundHandler.js';
@@ -19,6 +21,9 @@ export const setupServer = () => {
 
   // Мідлвара, що перетворює формат буфер на об'єкт в форматі json
   app.use(express.json());
+
+  // Парсинг cookies, щоб побачити refreshToken та sessionId
+  app.use(cookieParser());
 
   app.use('/auth', authRouter);
 
