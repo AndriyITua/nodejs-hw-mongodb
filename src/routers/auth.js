@@ -10,19 +10,19 @@ import { userSignupSchema, userSigninSchema } from '../validation/users.js';
 const authRouter = Router();
 
 authRouter.post(
-  '/signup',
+  '/register',
   validateBody(userSignupSchema),
   ctrlWrapper(authController.signupController),
 );
 
 authRouter.post(
-  '/signin',
+  '/login',
   validateBody(userSigninSchema),
   ctrlWrapper(authController.signinController),
 );
 
 authRouter.post('/refresh', ctrlWrapper(authController.refreshController));
 
-authRouter.post('/signout', ctrlWrapper(authController.signoutController));
+authRouter.post('/logout', ctrlWrapper(authController.signoutController));
 
 export default authRouter;
