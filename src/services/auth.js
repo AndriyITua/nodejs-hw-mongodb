@@ -133,7 +133,7 @@ export const requestResetToken = async (email) => {
     },
     env('JWT_SECRET'), // будь який секретний підпис JWT
     {
-      expiresIn: '15m', // токен дійсний 15 хв
+      expiresIn: '5m', // токен дійсний 5 хв
     },
   );
 

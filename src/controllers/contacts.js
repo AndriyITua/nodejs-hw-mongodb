@@ -7,6 +7,11 @@ import parseContactFilterParams from '../utils/filters/parseContactFilterParams.
 
 import { sortFields } from '../db/models/Contact.js';
 
+// export const patchStudentController = async (req, res, next) => {
+//   const { contactId } = req.params;
+//   const photo = req.file;
+// };
+
 export const getAllContactsController = async (req, res) => {
   const { perPage, page } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams({ ...req.query, sortFields });
@@ -54,6 +59,10 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const addContactController = async (req, res) => {
+  // console.log(req.body);
+  // console.log(req.file);
+  // console.log(process.cwd());
+
   // Беремо з мідлвари authenticate userId
   const { _id: userId } = req.user;
   const data = await contactServices.createContact({ ...req.body, userId });
