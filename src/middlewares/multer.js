@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 
 // Завантажені файли будуть збережені у визначеній директорії з унікальними іменами
 const storage = multer.diskStorage({
-  destionation: function (req, file, callback) {
+  destination: function (req, file, callback) {
     callback(null, TEMP_UPLOAD_DIR);
   },
   filename: function (req, file, callback) {

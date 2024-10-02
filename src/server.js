@@ -6,7 +6,7 @@ import env from './utils/env.js';
 
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
-import logger from './middlewares/logger.js';
+// import logger from './middlewares/logger.js';
 
 import authRouter from './routers/auth.js';
 import contactsRouter from './routers/contacts.js';
@@ -24,6 +24,9 @@ export const setupServer = () => {
 
   // Парсинг cookies, щоб побачити refreshToken та sessionId
   app.use(cookieParser());
+
+  // Надаю доступ фронтенду до статичних файлів в цій папці
+  app.use(express.static('uploads'));
 
   app.use('/auth', authRouter);
 

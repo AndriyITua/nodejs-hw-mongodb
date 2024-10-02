@@ -31,6 +31,10 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal',
     },
+    photo: {
+      type: String,
+      required: false,
+    },
 
     // Користувач, що добавив контакт
     userId: {
