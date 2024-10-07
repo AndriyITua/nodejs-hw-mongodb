@@ -20,6 +20,11 @@ authRouter.post(
   ctrlWrapper(authController.signupController),
 );
 
+authRouter.get(
+  '/google-oauth-url',
+  ctrlWrapper(authController.getGoogleOauthUrlController),
+);
+
 authRouter.post(
   '/login',
   validateBody(userSigninSchema),
