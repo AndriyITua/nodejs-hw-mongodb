@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
 import { readFile } from 'node:fs/promises';
 import * as path from 'node:path';
+import createHttpError from 'http-errors';
 
 import env from './env.js';
 
@@ -22,13 +23,27 @@ const googleOAuthClient = new OAuth2Client({
   redirectUri,
 });
 
+// Перевіряємо чи валідний код, який приходить у посиланні на фронтенд під час авторизації через google
+export const validateCode = async (code) => {
+  const response = await googleOAuthClient.getToken(code);
+  if (!response.tokens.id_token) {
+    throw createHttpError(401);
+  }
+  // Якщо код правильний, то дістаємо з нього тікет(проміжний обробник)
+  const ticket = await googleOAuthClient.verifyIdToken({
+    idToken: response.tokens.id_token,
+  });
+
+  return ticket;
+};
+
 // Створюємо спеціальне посилання, яке перекидає юзера
 export const generateGoogleOAuthUrl = () => {
   const url = googleOAuthClient.generateAuthUrl({
     // Інформація, яка нам потрібна про юзера з гугла
     scope: [
-      'https://www.gooleapis.com/auth/userinfo.email',
-      'https://www.gooleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
     ],
   });
 

@@ -12,6 +12,7 @@ import UserCollection from '../db/models/User.js';
 import { SMTP, TEMPLATES_DIR } from '../constants/index.js';
 import env from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
+import { validateCode } from '../utils/googleOAuth2.js';
 
 import {
   accessTokenLifetime,
@@ -74,6 +75,36 @@ export const signin = async (payload) => {
   const sessionData = createSession();
 
   // Зберігаємо сесію в БД
+  const userSession = await SessionCollection.create({
+    userId: user._id,
+    ...sessionData,
+  });
+
+  return userSession;
+};
+
+export const signinOrSignupWithGoogleOAuth = async (code) => {
+  const loginTicket = await validateCode(code);
+  // Отримаємо всю інформацію про людину, що міститься в google
+  const payload = loginTicket.getPayload();
+
+  // Перевірити чи є юзер, який логіниться в БД
+  let user = await UserCollection.findOne({ email: payload.email });
+  if (!user) {
+    // Створюємо пароль для юзера
+    const password = randomBytes(10);
+    const hashPassword = await bcrypt.hash(password, 10);
+    user = await UserCollection.create({
+      email: payload.email,
+      name: payload.name,
+      password: hashPassword,
+    });
+    delete user._doc.password;
+  }
+
+  const sessionData = createSession();
+
+  // Зберігаємо сесію з цим користувачем в БД
   const userSession = await SessionCollection.create({
     userId: user._id,
     ...sessionData,
