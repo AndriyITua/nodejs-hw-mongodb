@@ -6,6 +6,7 @@ import env from './utils/env.js';
 
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
+import swaggerDocs from './middlewares/swaggerDocs.js';
 // import logger from './middlewares/logger.js';
 
 import authRouter from './routers/auth.js';
@@ -32,6 +33,8 @@ export const setupServer = () => {
 
   // Запит починається на /contacts (end point) | Обробник запиту знаходиться в об'єкті contactsRouter
   app.use('/contacts', contactsRouter);
+
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
 
