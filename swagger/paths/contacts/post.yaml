@@ -20,33 +20,30 @@ requestBody:
             description: "Contact's name"
             type: string
             example: 'John Doe'
-          age:
-            description: "Student's age"
+          phoneNumber:
+            description: "Contact's phone number"
             type: number
-            example: 12
-          gender:
-            description: "Student's age"
+            example: +380000111000
+          email:
+            description: "Contact's email"
             type: string
-            enum: ['male', 'female', 'other']
-          avgMark:
-            description: "Student's average mark. Should be between 1 and 12"
-            type: number
-            example: 9.7
-          onDuty:
-            description: 'Whether is student on duty'
+            example: john.doe@gmail.com
+          isFavourite:
+            description: 'Is Contact favourite'
             type: boolean
             example: false
-          parentId:
-            description: "Student's parent id"
+          contactType:
+            description: "Contact's type"
             type: string
-            example: 65e4decdd286b30065d54af9
+            enum: ['work', 'home', 'personal']
+            example: personal
           photo:
-            description: "Student's photo"
+            description: "Link to contact's photo"
             type: string
             format: binary
 responses:
   '201':
-    description: Creates a student
+    description: Creates a contact
     content:
       application/json:
         schema:
@@ -61,9 +58,9 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully created a student!
-  #           data:
-  #             type: object
-  #             $ref: '../../components/schemas/student.yaml'
-  # '401':
-  #   $ref: '../../components/responses/401.yaml'
+              example: Successfully created a contact!
+            data:
+              type: object
+              $ref: components\schemas\contact.yaml
+  '401':
+    $ref: components\responses\401.yaml
